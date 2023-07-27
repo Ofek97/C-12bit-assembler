@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "vector.h": "c",
-        "trie.h": "c"
+        "trie.h": "c",
+        "stdlib.h": "c",
+        "compare": "c",
+        "limits": "c",
+        "new": "c"
     }
 }

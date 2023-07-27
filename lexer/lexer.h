@@ -2,9 +2,9 @@
 #define __LEXER_H
 
 #define MAX_NUMBER_DATA 80
-#define MAX_LABEL_LEN
+#define MAX_LABEL_LEN 31
 /* Define the structure for the abstract syntax tree (AST) */
-struct ast {
+struct ast{
     char syntax_error[150]; // Error message associated with the AST
     char label_name[MAX_LABEL_LEN + 1];
     enum {
@@ -20,7 +20,7 @@ struct ast {
                 ast_dir_entry,  // Directive: ENTRY
                 ast_dir_string, // Directive: STRING
                 ast_dir_data   // Directive: DATA
-            } ast_dir_opt;     // Directive option
+            }ast_dir_opt;     // Directive option
               
             union {
                 char* label_name;        // Label name associated with the directive
@@ -29,30 +29,35 @@ struct ast {
                     int data[MAX_NUMBER_DATA]; // Data values associated with the directive
                     int data_count;            // Number of data values
                 } data;
-            } dir_operands; // Directive operands
-
-        } ast_dir;  // AST represents a directive
+            }dir_operand; // Directive operands
+        }ast_dir;  // AST represents a directive
 
         struct {
             enum {
-                ast_inst_mov,   // Instruction: MOV
-                ast_inst_cmp,   // Instruction: CMP
-                ast_inst_add,   // Instruction: ADD
-                ast_inst_sub,   // Instruction: SUB
-                ast_inst_lea,   // Instruction: LEA
-                ast_inst_not,   // Instruction: NOT
-                ast_inst_clr,   // Instruction: CLR
-                ast_inst_dec,   // Instruction: DEC
-                ast_inst_jmp,   // Instruction: JMP
-                ast_inst_bne,   // Instruction: BNE
-                ast_inst_red,   // Instruction: RED
-                ast_inst_prn,   // Instruction: PRN
-                ast_inst_jsr,   // Instruction: JSR
-                ast_inst_rts,   // Instruction: RTS
-                ast_inst_stop   // Instruction: STOP
-            } ast_inst_opt;     // Instruction option
-        } ast_inst;             // AST represents an instruction
-
+                ast_inst_mov, 
+                ast_inst_cmp, 
+                ast_inst_add, 
+                ast_inst_sub, 
+                ast_inst_lea, 
+                ast_inst_not, 
+                ast_inst_clr,
+                ast_inst_inc, 
+                ast_inst_dec, 
+                ast_inst_jmp, 
+                ast_inst_bne, 
+                ast_inst_red, 
+                ast_inst_prn, 
+                ast_inst_jsr, 
+                ast_inst_rts, 
+                ast_inst_stop
+            }ast_inst_opt;     // Instruction option
+        }ast_inst;             // AST represents an instruction
+        enum{
+            ast_operand_opt_none=0,
+            ast_operand_opt_const_num = 1,
+            ast_operand_opt_register = 5,
+            ast_operand_opt_label = 3
+        }ast_inst_operand_opt[2];
         union {
             int const_number;       // Constant number associated with the instruction
             int register_number;    // Register number associated with the instruction
