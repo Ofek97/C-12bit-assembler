@@ -55,10 +55,10 @@ void trie_delete(Trie trie, const char *string) {
    Inserts the given string into the trie and associates it with the provided end value.
    Returns the pointer to the remaining portion of the string after insertion. */
 const char *trie_insert(Trie trie, const char *string, void *end) {
+    struct trie_node **iterator = &trie->next[(*string) - TRIE_BASE_CHAR];
+    
     if (*string == '\0')
         return NULL;
-
-    struct trie_node **iterator = &trie->next[(*string) - TRIE_BASE_CHAR];
     while (1) {
         if (*iterator == NULL) {
             *iterator = calloc(1, sizeof(struct trie_node));
